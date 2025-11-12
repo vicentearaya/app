@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <div class="login-header">
+      <ion-icon name="person-circle-outline" size="large"></ion-icon>
+      <h2>Bienvenido</h2>
+      <p>Ingresa tus credenciales para continuar</p>
+    </div>
+
+    <form #f="ngForm" (ngSubmit)="onSubmit()">
+      <!-- Campo Código -->
+      <ion-item lines="full">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input
+          label="Código de funcionario"
+          labelPlacement="floating"
+          name="codigo"
+          [(ngModel)]="model.codigo"
+          required
+          placeholder="Ingresa tu código"
+          type="text">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="(f.submitted || f.controls['codigo']?.dirty) && f.controls['codigo']?.errors?.['required']" class="ion-padding-start">
+        <ion-text color="danger">
+          <small>⚠️ El código es obligatorio</small>
+        </ion-text>
+      </div>
+
+      <!-- Campo Contraseña -->
+      <ion-item lines="full" class="ion-margin-top">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          label="Contraseña"
+          labelPlacement="floating"
+          name="password"
+          type="password"
+          [(ngModel)]="model.password"
+          required
+          [minlength]="minPasswordLength"
+          maxlength="6"
+          placeholder="Ingresa tu contraseña">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="f.submitted || f.controls['password']?.dirty" class="ion-padding-start">
+        <ion-text color="danger" *ngIf="f.controls['password']?.errors?.['required']">
+          <small>⚠️ La contraseña es obligatoria</small>
+        </ion-text>
+        <ion-text color="danger" *ngIf="f.controls['password']?.errors?.['minlength']">
+          <small>⚠️ La contraseña debe tener {{minPasswordLength}} caracteres</small>
+        </ion-text>
+      </div>
+
+      <!-- Botón Submit -->
+      <ion-button 
+        expand="block" 
+        type="submit" 
+        class="ion-margin-top"
+        [disabled]="f.invalid">
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        Iniciar Sesión
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
