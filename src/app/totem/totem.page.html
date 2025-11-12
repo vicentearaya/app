@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tótem de Vales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="totem-content">
+  <div class="totem-container">
+    <!-- Header -->
+    <div class="totem-header ion-text-center ion-padding">
+      <div class="header-icon">🎫</div>
+      <h1 class="totem-title">Solicita tu Vale</h1>
+      <p class="totem-subtitle">Selecciona el servicio que deseas</p>
+    </div>
+
+    <!-- Grid de servicios -->
+    <ion-grid>
+      <ion-row>
+        <ion-col 
+          size="12" 
+          size-md="6" 
+          size-lg="4" 
+          *ngFor="let servicio of servicios">
+          
+          <ion-card 
+            class="service-card" 
+            button 
+            (click)="imprimir(servicio)"
+            [color]="servicio.color">
+            
+            <ion-card-content class="ion-text-center">
+              <!-- Icono del servicio -->
+              <div class="service-icon-wrapper">
+                <div class="service-emoji">{{ servicio.emoji }}</div>
+              </div>
+
+              <!-- Nombre del servicio -->
+              <h2 class="service-name">{{ servicio.nombre }}</h2>
+              
+              <!-- Descripción -->
+              <p class="service-description">{{ servicio.descripcion }}</p>
+              
+              <!-- Horario -->
+              <div class="service-time">
+                <ion-icon name="time-outline"></ion-icon>
+                <span>{{ servicio.horario }}</span>
+              </div>
+
+              <!-- Botón de impresión -->
+              <ion-button 
+                expand="block" 
+                size="large"
+                class="print-button"
+                color="light">
+                <ion-icon slot="start" name="print-outline"></ion-icon>
+                Imprimir Vale
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Instrucciones -->
+    <div class="instructions-card ion-padding ion-margin">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="information-circle-outline"></ion-icon>
+            Instrucciones
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list lines="none">
+            <ion-item>
+              <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
+              <ion-label class="ion-text-wrap">
+                <p>Selecciona el tipo de servicio que necesitas</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
+              <ion-label class="ion-text-wrap">
+                <p>Presiona "Imprimir Vale" para generar tu ticket</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
+              <ion-label class="ion-text-wrap">
+                <p>Presenta tu vale en el casino para recibir tu comida</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

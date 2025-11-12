@@ -1,0 +1,112 @@
+// Menu Header
+.menu-header {
+  padding: 2rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  .logo-container {
+    margin-bottom: 1rem;
+
+    .menu-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid white;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  h2 {
+    margin: 0.5rem 0 0.25rem 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+}
+
+// Menu List
+.menu-list {
+  padding: 1rem 0;
+  background: transparent;
+
+  ion-item {
+    --background: transparent;
+    --padding-start: 1.5rem;
+    --padding-end: 1.5rem;
+    --inner-padding-end: 0;
+    --min-height: 50px;
+    margin: 0.25rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    ion-icon {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      color: #666;
+      transition: all 0.3s ease;
+    }
+
+    ion-label {
+      color: #333;
+      font-size: 1rem;
+    }
+
+    &:hover {
+      --background: rgba(0, 0, 0, 0.03);
+    }
+
+    &.active-item {
+      --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      
+      ion-icon {
+        color: white;
+      }
+
+      ion-label {
+        color: white;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Menu Footer
+.menu-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  text-align: center;
+  border-top: 1px solid #e0e0e0;
+  background: white;
+
+  p {
+    margin: 0.25rem 0;
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  .version {
+    font-size: 0.75rem;
+    color: #999;
+  }
+}
+
+// Menu Animation
+ion-menu {
+  --width: 280px;
+  
+  ion-content {
+    --background: #f8f9fa;
+  }
+}

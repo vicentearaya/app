@@ -18,9 +18,7 @@ export class LoginPage {
   constructor(private router: Router) {}
 
   onSubmit() {
-    // Aquí irá tu lógica de login
     console.log('Login:', this.model);
-    // this.router.navigate(['/home']);
   }
 
   goBack() {

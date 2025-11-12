@@ -1,0 +1,190 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reportes y estadisticas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="reportes-content">
+  <div class="reportes-container">
+    
+    <!-- Tarjetas de Estadísticas -->
+    <div class="stats-grid">
+      <ion-card class="stat-card">
+        <ion-card-content>
+          <div class="stat-icon" style="background: #e3f2fd;">
+            <ion-icon name="ticket-outline" color="primary"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Total Emitidos</p>
+            <h2 class="stat-value">{{ totalEmitidos }}</h2>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card">
+        <ion-card-content>
+          <div class="stat-icon" style="background: #e8f5e9;">
+            <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Total Canjeados</p>
+            <h2 class="stat-value">{{ totalCanjeados }}</h2>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card">
+        <ion-card-content>
+          <div class="stat-icon" style="background: #fff3e0;">
+            <ion-icon name="pie-chart-outline" color="warning"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Promedio Canje</p>
+            <h2 class="stat-value">{{ promedioCanjeados }}%</h2>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Filtros -->
+    <ion-card class="filtros-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="filter-outline"></ion-icon>
+          Filtros
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="4">
+              <ion-item lines="none">
+                <ion-label position="stacked">Fecha Inicio</ion-label>
+                <ion-input
+                  type="date"
+                  [(ngModel)]="fechaInicio"
+                  (ionChange)="aplicarFiltros()">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" size-md="4">
+              <ion-item lines="none">
+                <ion-label position="stacked">Fecha Fin</ion-label>
+                <ion-input
+                  type="date"
+                  [(ngModel)]="fechaFin"
+                  (ionChange)="aplicarFiltros()">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" size-md="4">
+              <ion-item lines="none">
+                <ion-label position="stacked">Servicio</ion-label>
+                <ion-select
+                  [(ngModel)]="servicioFiltro"
+                  (ionChange)="aplicarFiltros()">
+                  <ion-select-option *ngFor="let servicio of servicios" [value]="servicio">
+                    {{ servicio }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-button expand="block" fill="outline" (click)="limpiarFiltros()">
+                <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+                Limpiar Filtros
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Tabla de Reportes -->
+    <ion-card class="tabla-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="list-outline"></ion-icon>
+          Detalle de Vales
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <!-- Vista Desktop -->
+        <div class="table-desktop">
+          <table class="reportes-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Servicio</th>
+                <th>Emitidos</th>
+                <th>Canjeados</th>
+                <th>% Canje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let reporte of reportesFiltrados">
+                <td>{{ formatearFecha(reporte.fecha) }}</td>
+                <td>
+                  <ion-badge [color]="reporte.servicio === 'Desayuno' ? 'warning' : reporte.servicio === 'Almuerzo' ? 'success' : 'tertiary'">
+                    {{ reporte.servicio }}
+                  </ion-badge>
+                </td>
+                <td>{{ reporte.emitidos }}</td>
+                <td>{{ reporte.canjeados }}</td>
+                <td>
+                  <ion-badge [color]="getColorPorcentaje(reporte.porcentaje)">
+                    {{ reporte.porcentaje }}%
+                  </ion-badge>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div *ngIf="reportesFiltrados.length === 0" class="no-data">
+            <ion-icon name="document-outline" size="large"></ion-icon>
+            <p>No hay datos disponibles</p>
+          </div>
+        </div>
+
+        <!-- Vista Mobile -->
+        <div class="table-mobile">
+          <ion-list *ngIf="reportesFiltrados.length > 0">
+            <ion-item *ngFor="let reporte of reportesFiltrados" class="reporte-item">
+              <ion-label>
+                <h2>
+                  <ion-badge [color]="reporte.servicio === 'Desayuno' ? 'warning' : reporte.servicio === 'Almuerzo' ? 'success' : 'tertiary'">
+                    {{ reporte.servicio }}
+                  </ion-badge>
+                </h2>
+                <p>{{ formatearFecha(reporte.fecha) }}</p>
+                <div class="reporte-stats">
+                  <span>Emitidos: <strong>{{ reporte.emitidos }}</strong></span>
+                  <span>Canjeados: <strong>{{ reporte.canjeados }}</strong></span>
+                  <ion-badge [color]="getColorPorcentaje(reporte.porcentaje)">
+                    {{ reporte.porcentaje }}%
+                  </ion-badge>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+          <div *ngIf="reportesFiltrados.length === 0" class="no-data">
+            <ion-icon name="document-outline" size="large"></ion-icon>
+            <p>No hay datos disponibles</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,230 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Caja</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="caja-content">
+  <div class="caja-container">
+    
+    <!-- Layout para Desktop -->
+    <div class="desktop-layout">
+      
+      <!-- Panel Izquierdo -->
+      <div class="panel-left">
+        
+        <!-- Búsqueda de Vale -->
+        <ion-card class="vale-card">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="ticket-outline"></ion-icon>
+              Buscar Vale
+            </ion-card-title>
+          </ion-card-header>
+          
+          <ion-card-content>
+            <div class="search-box">
+              <ion-input
+                [(ngModel)]="codigoVale"
+                placeholder="Escanea o ingresa el código"
+                (keyup.enter)="buscarVale()"
+                fill="outline">
+              </ion-input>
+              <ion-button (click)="buscarVale()" expand="block">
+                <ion-icon slot="start" name="search-outline"></ion-icon>
+                Buscar
+              </ion-button>
+            </div>
+
+            <!-- Información del Vale -->
+            <div class="vale-info" *ngIf="valeActual">
+              <ion-list lines="none">
+                <ion-item>
+                  <ion-label>
+                    <p>Código</p>
+                    <h2>{{ valeActual.codigo }}</h2>
+                  </ion-label>
+                </ion-item>
+                
+                <ion-item>
+                  <ion-label>
+                    <p>Estado</p>
+                    <ion-badge [color]="valeActual.estado === 'activo' ? 'success' : 'danger'">
+                      {{ valeActual.estado }}
+                    </ion-badge>
+                  </ion-label>
+                </ion-item>
+                
+                <ion-item>
+                  <ion-label>
+                    <p>Saldo disponible</p>
+                    <h2 class="saldo-amount">${{ valeActual.saldo_disponible }}</h2>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+
+            <!-- Error del Vale -->
+            <ion-note color="danger" *ngIf="errorVale" class="error-note">
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              {{ errorVale }}
+            </ion-note>
+          </ion-card-content>
+        </ion-card>
+
+        <!-- Panel de Productos -->
+        <ion-card class="productos-card">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="fast-food-outline"></ion-icon>
+              Productos Disponibles
+            </ion-card-title>
+          </ion-card-header>
+          
+          <ion-card-content>
+            <!-- Filtro de Categorías -->
+            <div class="categoria-chips">
+              <ion-chip
+                *ngFor="let cat of categorias"
+                [color]="categoriaSeleccionada === cat ? 'primary' : 'medium'"
+                [outline]="categoriaSeleccionada !== cat"
+                (click)="filtrarPorCategoria(cat)">
+                <ion-label>{{ cat }}</ion-label>
+              </ion-chip>
+            </div>
+
+            <!-- Grid de Productos -->
+            <div class="productos-grid">
+              <ion-card
+                *ngFor="let producto of productosFiltrados"
+                class="producto-card"
+                [class.disabled]="!valeActual"
+                button
+                (click)="agregarProducto(producto)"
+                [disabled]="!valeActual">
+                
+                <ion-card-content class="ion-text-center">
+                  <div class="producto-icon">🍽️</div>
+                  <h3 class="producto-nombre">{{ producto.nombre }}</h3>
+                  <p class="producto-precio">${{ producto.precio }}</p>
+                  <ion-button
+                    size="small"
+                    expand="block"
+                    [disabled]="!valeActual">
+                    <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+                    Agregar
+                  </ion-button>
+                </ion-card-content>
+              </ion-card>
+            </div>
+
+            <!-- Mensaje si no hay vale -->
+            <ion-note color="medium" *ngIf="!valeActual" class="info-note">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              Busca un vale para comenzar
+            </ion-note>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Panel Derecho - Carrito -->
+      <div class="panel-right">
+        <ion-card class="carrito-card">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="cart-outline"></ion-icon>
+              Carrito de Compra
+            </ion-card-title>
+          </ion-card-header>
+          
+          <ion-card-content>
+            
+            <!-- Carrito Vacío -->
+            <div *ngIf="carrito.length === 0" class="carrito-vacio ion-text-center">
+              <ion-icon name="cart-outline" size="large" color="medium"></ion-icon>
+              <p>Carrito vacío</p>
+            </div>
+
+            <!-- Items del Carrito -->
+            <ion-list *ngIf="carrito.length > 0" class="carrito-list">
+              <ion-item *ngFor="let item of carrito; let i = index" class="carrito-item">
+                <ion-label>
+                  <h3>{{ item.nombre }}</h3>
+                  <p>${{ item.precio }} × {{ item.cantidad }}</p>
+                </ion-label>
+                
+                <div slot="end" class="item-controls">
+                  <ion-button size="small" fill="clear" (click)="disminuirCantidad(i)">
+                    <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+                  </ion-button>
+                  
+                  <span class="cantidad-display">{{ item.cantidad }}</span>
+                  
+                  <ion-button size="small" fill="clear" (click)="aumentarCantidad(i)">
+                    <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+                  </ion-button>
+                  
+                  <ion-button size="small" fill="clear" color="danger" (click)="eliminarDelCarrito(i)">
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-item>
+            </ion-list>
+
+            <!-- Resumen -->
+            <div class="carrito-resumen" *ngIf="carrito.length > 0">
+              <div class="resumen-row">
+                <span>Subtotal:</span>
+                <span>${{ calcularTotal() }}</span>
+              </div>
+              
+              <div class="resumen-row total-row">
+                <span>Total:</span>
+                <span>${{ calcularTotal() }}</span>
+              </div>
+              
+              <div class="resumen-row saldo-row" *ngIf="valeActual">
+                <span>Saldo disponible:</span>
+                <span [class.text-danger]="valeActual.saldo_disponible! < calcularTotal()">
+                  ${{ valeActual.saldo_disponible }}
+                </span>
+              </div>
+
+              <!-- Alerta de saldo insuficiente -->
+              <ion-note color="danger" *ngIf="valeActual && valeActual.saldo_disponible! < calcularTotal()" class="saldo-insuficiente">
+                <ion-icon name="warning-outline"></ion-icon>
+                Saldo insuficiente
+              </ion-note>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="carrito-actions">
+              <ion-button
+                expand="block"
+                fill="outline"
+                color="medium"
+                (click)="limpiarCarrito()"
+                [disabled]="carrito.length === 0">
+                <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+                Cancelar
+              </ion-button>
+              
+              <ion-button
+                expand="block"
+                color="success"
+                (click)="procesarTransaccion()"
+                [disabled]="!puedeProcessar()">
+                <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+                Procesar Venta
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+</ion-content>

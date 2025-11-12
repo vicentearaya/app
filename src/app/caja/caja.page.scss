@@ -1,0 +1,389 @@
+.caja-content {
+  --background: #f5f7fa;
+}
+
+.caja-container {
+  padding: 1rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+// Desktop Layout
+.desktop-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 1rem;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panel-right {
+  @media (min-width: 1025px) {
+    position: sticky;
+    top: 1rem;
+    height: fit-content;
+  }
+}
+
+// Cards
+ion-card {
+  margin: 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
+}
+
+// Vale Card
+.vale-card {
+  .search-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+
+    ion-input {
+      --border-radius: 8px;
+    }
+
+    ion-button {
+      --border-radius: 8px;
+      height: 44px;
+      font-weight: 600;
+    }
+  }
+
+  .vale-info {
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 1rem;
+    padding: 0.5rem;
+
+    ion-item {
+      --background: transparent;
+      --padding-start: 0.5rem;
+      --inner-padding-end: 0.5rem;
+
+      ion-label {
+        p {
+          font-size: 0.85rem;
+          color: #666;
+          margin-bottom: 0.25rem;
+        }
+
+        h2 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #333;
+          margin: 0;
+        }
+      }
+    }
+
+    .saldo-amount {
+      color: #27ae60;
+      font-size: 1.5rem !important;
+      font-weight: 700 !important;
+    }
+  }
+
+  .error-note {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: #fff3cd;
+    border-radius: 8px;
+    border: 1px solid #ffc107;
+
+    ion-icon {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// Productos Card
+.productos-card {
+  flex: 1;
+
+  .categoria-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    ion-chip {
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  .productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+  }
+
+  .producto-card {
+    margin: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:not(.disabled) {
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    ion-card-content {
+      padding: 1rem;
+    }
+
+    .producto-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .producto-nombre {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #333;
+      margin: 0.5rem 0;
+      min-height: 2.4em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .producto-precio {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #27ae60;
+      margin: 0.5rem 0;
+    }
+
+    ion-button {
+      margin-top: 0.5rem;
+      --border-radius: 8px;
+      font-size: 0.85rem;
+      height: 36px;
+    }
+  }
+
+  .info-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #e3f2fd;
+    border-radius: 8px;
+
+    ion-icon {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// Carrito Card
+.carrito-card {
+  .carrito-vacio {
+    padding: 3rem 1rem;
+
+    ion-icon {
+      font-size: 80px;
+      opacity: 0.3;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #999;
+      margin: 0;
+    }
+  }
+
+  .carrito-list {
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+
+    .carrito-item {
+      --background: #f8f9fa;
+      --border-radius: 8px;
+      margin-bottom: 0.75rem;
+      --padding-start: 1rem;
+      --inner-padding-end: 0.5rem;
+
+      ion-label {
+        h3 {
+          font-weight: 600;
+          color: #333;
+          font-size: 0.95rem;
+          margin-bottom: 0.25rem;
+        }
+
+        p {
+          color: #666;
+          font-size: 0.85rem;
+          margin: 0;
+        }
+      }
+
+      .item-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        .cantidad-display {
+          min-width: 30px;
+          text-align: center;
+          font-weight: 700;
+          font-size: 1rem;
+        }
+
+        ion-button {
+          --padding-start: 0.5rem;
+          --padding-end: 0.5rem;
+          margin: 0;
+
+          ion-icon {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  .carrito-resumen {
+    border-top: 2px solid #e0e0e0;
+    padding-top: 1rem;
+    margin-top: 1rem;
+
+    .resumen-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      font-size: 1rem;
+      color: #666;
+
+      &.total-row {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #333;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 0.75rem;
+        margin-top: 0.5rem;
+      }
+
+      &.saldo-row {
+        color: #27ae60;
+        font-weight: 600;
+        font-size: 1rem;
+      }
+    }
+
+    .text-danger {
+      color: #dc3545 !important;
+    }
+
+    .saldo-insuficiente {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background: #fff3cd;
+      border-radius: 8px;
+      margin-top: 1rem;
+
+      ion-icon {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .carrito-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+
+    ion-button {
+      --border-radius: 8px;
+      height: 48px;
+      font-weight: 600;
+      margin: 0;
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+}
+
+// Scrollbar styling
+.productos-grid::-webkit-scrollbar,
+.carrito-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.productos-grid::-webkit-scrollbar-track,
+.carrito-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.productos-grid::-webkit-scrollbar-thumb,
+.carrito-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.productos-grid::-webkit-scrollbar-thumb:hover,
+.carrito-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

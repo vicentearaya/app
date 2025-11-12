@@ -1,0 +1,204 @@
+.totem-content {
+  --background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.totem-container {
+  min-height: 100%;
+  padding-bottom: 2rem;
+}
+
+// Header
+.totem-header {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.header-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.totem-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3E2723;
+  margin: 0.5rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.totem-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
+
+// Service Cards
+.service-card {
+  height: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  ion-card-content {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.service-icon-wrapper {
+  margin-bottom: 1rem;
+}
+
+.service-emoji {
+  font-size: 4rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.service-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem 0;
+  color: white;
+}
+
+.service-description {
+  font-size: 1rem;
+  margin: 0.5rem 0 1rem 0;
+  opacity: 0.9;
+  color: white;
+}
+
+.service-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0 1.5rem 0;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: white;
+
+  ion-icon {
+    font-size: 1.2rem;
+  }
+
+  span {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+}
+
+.print-button {
+  margin-top: 1rem;
+  --border-radius: 25px;
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  height: 48px;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Instructions Card
+.instructions-card {
+  ion-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  ion-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--ion-color-primary);
+
+    ion-icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    margin-bottom: 0.5rem;
+
+    p {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+  }
+
+  ion-icon[slot="start"] {
+    margin-inline-end: 1rem;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .totem-title {
+    font-size: 1.75rem;
+  }
+
+  .totem-subtitle {
+    font-size: 1rem;
+  }
+
+  .service-card {
+    ion-card-content {
+      padding: 1.5rem 1rem;
+    }
+  }
+
+  .service-name {
+    font-size: 1.5rem;
+  }
+}
+
+// Print Styles
+@media print {
+  ion-header,
+  .totem-header,
+  .instructions-card,
+  .print-button {
+    display: none !important;
+  }
+
+  .service-card {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 2px solid #333;
+  }
+}

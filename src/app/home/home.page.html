@@ -1,20 +1,171 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="/assets/Logo2.jpg" alt="Logo" class="hero-logo" />
+      <h1 class="hero-title">Bienvenido a CasinoSoft</h1>
+      <p class="hero-subtitle">Tu sistema de gestión de vales de alimentación</p>
+      <ion-button routerLink="/totem" expand="block" size="large" class="btn-hero-primary">
+        <ion-icon slot="start" name="restaurant-outline"></ion-icon>
+        Solicitar Vale
+      </ion-button>
+    </div>
+    
+    <!-- Botón de Menú -->
+    <ion-fab vertical="top" horizontal="start" slot="fixed">
+      <ion-fab-button size="small" id="menu-button">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- Botón de Login -->
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <ion-fab-button routerLink="/login" size="small">
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+  <!-- FIN Hero Section -->
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- Sección Desayuno -->
+  <div class="meal-section">
+    <div class="meal-image-wrapper">
+      <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=1200&q=80" 
+           alt="Desayuno" class="meal-image" />
+    </div>
+    <div class="meal-content-wrapper">
+      <div class="meal-icon">☀️</div>
+      <h2 class="meal-title">Desayuno</h2>
+      <p class="meal-description">
+        Comienza tu día con energía. Disponible de 7:00 AM a 9:30 AM.
+        Variedad de opciones nutritivas para empezar la jornada laboral.
+      </p>
+      <div class="meal-features">
+        <ion-chip color="primary">
+          <ion-label>🥐 Pan fresco</ion-label>
+        </ion-chip>
+        <ion-chip color="primary">
+          <ion-label>☕ Café y té</ion-label>
+        </ion-chip>
+        <ion-chip color="primary">
+          <ion-label>🍳 Huevos</ion-label>
+        </ion-chip>
+        <ion-chip color="primary">
+          <ion-label>🥛 Lácteos</ion-label>
+        </ion-chip>
+      </div>
+      <ion-button routerLink="/totem" expand="block" class="btn-meal">
+        Solicitar Vale de Desayuno
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Sección Almuerzo -->
+  <div class="meal-section meal-section-reverse">
+    <div class="meal-image-wrapper">
+      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&q=80" 
+           alt="Almuerzo" class="meal-image" />
+    </div>
+    <div class="meal-content-wrapper">
+      <div class="meal-icon">🍽️</div>
+      <h2 class="meal-title">Almuerzo</h2>
+      <p class="meal-description">
+        El momento más importante del día. Disponible de 12:00 PM a 2:30 PM.
+        Menús completos y balanceados preparados por nuestro equipo culinario.
+      </p>
+      <div class="meal-features">
+        <ion-chip color="secondary">
+          <ion-label>🥗 Ensaladas frescas</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary">
+          <ion-label>🍖 Plato principal</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary">
+          <ion-label>🍚 Acompañamientos</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary">
+          <ion-label>🍮 Postre</ion-label>
+        </ion-chip>
+      </div>
+      <ion-button routerLink="/totem" expand="block" color="secondary" class="btn-meal">
+        Solicitar Vale de Almuerzo
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Sección Once -->
+  <div class="meal-section">
+    <div class="meal-image-wrapper">
+      <img src="https://hips.hearstapps.com/hmg-prod/images/sandwiches-elle-gourmet-6656c4ad89a6e.jpg?crop=1.00xw:0.734xh;0,0.128xh&resize=640:*" 
+           alt="Once" class="meal-image" />
+    </div>
+    <div class="meal-content-wrapper">
+      <div class="meal-icon">🧁</div>
+      <h2 class="meal-title">Once</h2>
+      <p class="meal-description">
+        Recarga energías por la tarde. Disponible de 4:00 PM a 6:00 PM.
+        Opciones ligeras y deliciosas para continuar tu jornada.
+      </p>
+      <div class="meal-features">
+        <ion-chip color="tertiary">
+          <ion-label>🍪 Galletas</ion-label>
+        </ion-chip>
+        <ion-chip color="tertiary">
+          <ion-label>☕ Bebidas calientes</ion-label>
+        </ion-chip>
+        <ion-chip color="tertiary">
+          <ion-label>🥪 Sandwiches</ion-label>
+        </ion-chip>
+        <ion-chip color="tertiary">
+          <ion-label>🍰 Pastelería</ion-label>
+        </ion-chip>
+      </div>
+      <ion-button routerLink="/totem" expand="block" color="tertiary" class="btn-meal">
+        Solicitar Vale de Once
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Sección de Información -->
+  <div class="info-section">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="4">
+          <ion-card class="info-card">
+            <ion-card-content class="ion-text-center">
+              <div class="info-icon">⏰</div>
+              <h3>Horarios Flexibles</h3>
+              <p>Adaptados a tu jornada laboral para mayor comodidad</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        
+        <ion-col size="12" size-md="4">
+          <ion-card class="info-card">
+            <ion-card-content class="ion-text-center">
+              <div class="info-icon">🎫</div>
+              <h3>Vales Digitales</h3>
+              <p>Sistema rápido y eficiente, sin papeles</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        
+        <ion-col size="12" size-md="4">
+          <ion-card class="info-card">
+            <ion-card-content class="ion-text-center">
+              <div class="info-icon">👨‍🍳</div>
+              <h3>Calidad Garantizada</h3>
+              <p>Alimentos frescos preparados diariamente</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Footer -->
+  <div class="site-footer ion-text-center ion-padding">
+    <p>&copy; 2025 CasinoSoft - Sistema de Gestión de Vales</p>
   </div>
 </ion-content>
