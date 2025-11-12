@@ -1,9 +1,11 @@
 ## 🚀 Configuración
 
-
+Clonar el repositorio
 ## Frontend Ionic
 
 ```bash
+
+cd app
 
 # Instalar dependencias
 npm install
