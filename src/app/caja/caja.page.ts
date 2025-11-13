@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule, AlertController, LoadingController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ProductoService } from '../services/producto.service';
 import { ValeService } from '../services/vale.service';
@@ -42,11 +42,23 @@ export class CajaPage implements OnInit {
     private transaccionService: TransaccionService,
     private alertController: AlertController,
     private loadingController: LoadingController,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.cargarProductos();
+    
+    // Verificar si hay un código de vale en los parámetros de la URL
+    this.route.queryParams.subscribe(params => {
+      if (params['codigo']) {
+        this.codigoVale = params['codigo'];
+        // Buscar el vale automáticamente después de un pequeño delay
+        setTimeout(() => {
+          this.buscarVale();
+        }, 500);
+      }
+    });
   }
 
   async cargarProductos(): Promise<void> {
