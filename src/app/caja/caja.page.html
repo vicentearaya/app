@@ -102,10 +102,8 @@
               <ion-card
                 *ngFor="let producto of productosFiltrados"
                 class="producto-card"
-                [class.disabled]="!valeActual"
                 button
-                (click)="agregarProducto(producto)"
-                [disabled]="!valeActual">
+                (click)="agregarProducto(producto)">
                 
                 <ion-card-content class="ion-text-center">
                   <div class="producto-icon">🍽️</div>
@@ -114,7 +112,7 @@
                   <ion-button
                     size="small"
                     expand="block"
-                    [disabled]="!valeActual">
+                    color="primary">
                     <ion-icon slot="start" name="add-circle-outline"></ion-icon>
                     Agregar
                   </ion-button>
@@ -123,9 +121,14 @@
             </div>
 
             <!-- Mensaje si no hay vale -->
-            <ion-note color="medium" *ngIf="!valeActual" class="info-note">
+            <ion-note color="warning" *ngIf="!valeActual && carrito.length > 0" class="info-note">
+              <ion-icon name="warning-outline"></ion-icon>
+              Busca un vale para procesar la venta
+            </ion-note>
+            
+            <ion-note color="medium" *ngIf="!valeActual && carrito.length === 0" class="info-note">
               <ion-icon name="information-circle-outline"></ion-icon>
-              Busca un vale para comenzar
+              Puedes agregar productos al carrito. Busca un vale para procesar la venta.
             </ion-note>
           </ion-card-content>
         </ion-card>
@@ -194,6 +197,12 @@
                 </span>
               </div>
 
+              <!-- Mensaje si no hay vale -->
+              <ion-note color="warning" *ngIf="!valeActual" class="saldo-insuficiente">
+                <ion-icon name="warning-outline"></ion-icon>
+                Busca un vale para procesar la venta
+              </ion-note>
+
               <!-- Alerta de saldo insuficiente -->
               <ion-note color="danger" *ngIf="valeActual && valeActual.saldo_disponible! < calcularTotal()" class="saldo-insuficiente">
                 <ion-icon name="warning-outline"></ion-icon>
@@ -217,7 +226,7 @@
                 expand="block"
                 color="success"
                 (click)="procesarTransaccion()"
-                [disabled]="!puedeProcessar()">
+                [disabled]="!tieneProductos()">
                 <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
                 Procesar Venta
               </ion-button>

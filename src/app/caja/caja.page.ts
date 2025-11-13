@@ -127,7 +127,10 @@ export class CajaPage implements OnInit {
   }
 
   agregarProducto(producto: Producto): void {
-    if (!this.valeActual) return;
+    // Permitir agregar productos sin vale, pero mostrar advertencia
+    if (!this.valeActual) {
+      this.mostrarToast('Agrega un vale antes de procesar la venta', 'warning');
+    }
 
     const itemExistente = this.carrito.find(item => item.producto_id === producto.id);
     
@@ -165,16 +168,41 @@ export class CajaPage implements OnInit {
   }
 
   puedeProcessar(): boolean {
+    // Requiere vale y productos en el carrito
     if (!this.valeActual || this.carrito.length === 0) {
       return false;
     }
     
+    // Verificar que el saldo sea suficiente
     const saldoDisponible = this.valeActual.saldo_disponible ?? 0;
     return this.calcularTotal() <= saldoDisponible;
   }
 
+  tieneProductos(): boolean {
+    return this.carrito.length > 0;
+  }
+
   async procesarTransaccion(): Promise<void> {
-    if (!this.puedeProcessar()) return;
+    // Validar que haya un vale antes de procesar
+    if (!this.valeActual) {
+      const alert = await this.alertController.create({
+        header: 'Vale requerido',
+        message: 'Debes buscar un vale antes de procesar la venta',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    if (!this.puedeProcessar()) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'No se puede procesar la venta. Verifica que tengas saldo suficiente y productos en el carrito.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
 
     const alert = await this.alertController.create({
       header: 'Confirmar transacción',
